@@ -1,7 +1,5 @@
-import 'dart:io';
-
+import 'package:ds_client/image_upload_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,30 +28,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final ImagePicker _picker = ImagePicker();
-  XFile? image;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("合同会社M's ART"),
+        automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          image == null ? Container() : Image.file(File(image!.path)),
-          ElevatedButton(
-            onPressed: () async {
-              final XFile? tmpImage =
-                  await _picker.pickImage(source: ImageSource.gallery);
-
-              setState(() {
-                image = tmpImage;
-              });
-            },
-            child: const Text('画像アップロード'),
-          ),
-        ],
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ImageUploadScreen(),
+              ),
+            );
+          },
+          child: const Text('始める'),
+        ),
       ),
     );
   }
