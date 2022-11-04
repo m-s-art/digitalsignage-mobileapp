@@ -57,7 +57,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         // read file as Uint8List
         Uint8List content = await image!.readAsBytes();
         var storage = AzureStorage.parse(
-            'DefaultEndpointsProtocol=https;AccountName=sadigitalsignage;AccountKey=wOND977+0ioGVU7m6PigxRSOlf1HVhi1pYisYOoasrMOnDoTInxTogbt0fZCZUb6RRogd0oKhXuK+AStgd1EvQ==;EndpointSuffix=core.windows.net');
+            'REDACTED');
         String container = 'images';
         String path = '/$container/$fileName';
         // get the mine type of the file
