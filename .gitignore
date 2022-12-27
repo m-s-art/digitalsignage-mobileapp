@@ -19,3 +19,5 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+ds_client/android/app/google-services.json
+ds_client/lib/firebase_options.dart
