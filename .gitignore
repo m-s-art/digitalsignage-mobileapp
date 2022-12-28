@@ -21,3 +21,5 @@ doc/api/
 *.js.map
 ds_client/android/app/google-services.json
 ds_client/lib/firebase_options.dart
+ds_client/ios/Runner/GoogleService-Info.plist
+ds_client/macos/Runner/GoogleService-Info.plist
