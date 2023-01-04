@@ -35,6 +35,7 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   await Firebase.initializeApp(
+    name: 'DSIGN',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -126,14 +127,26 @@ class _MyHomePageState extends State<MyHomePage> {
         .collection(playlistName)
         .get();
 
-    final mediaItemsSerializedJsonString =
-        json.encode(querySnapshot.docs.map((doc) => doc.data()).toList());
+    final payloadJsonString = json.encode({
+      'media_items': querySnapshot.docs.map((doc) => doc.data()).toList(),
+      'settings': {
+        'audio': {
+          'end_time': '18:00',
+          'start_time': '11:00',
+        },
+        'display': {
+          'end_time': '21:00',
+          'item_duration_seconds': 3,
+          'start_time': '09:00',
+        },
+      },
+    });
 
     var uri = Uri.https(
       'msart-iotcontroller.azurewebsites.net',
       '/api/SendMessage',
       {
-        'media_items_json': mediaItemsSerializedJsonString,
+        'payload_json': payloadJsonString,
       },
     );
     await http.get(uri);
@@ -176,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: AlignmentDirectional.topEnd,
         children: [
           SizedBox(
-            height: 400,
+            width: 640,
             child: FadeInImage.memoryNetwork(
               placeholder: kTransparentImage,
               image: mediaItem.url,
@@ -218,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<CroppedFile?> _cropImage(XFile? image) {
     final croppedFile = ImageCropper().cropImage(
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      aspectRatio: const CropAspectRatio(ratioX: 4, ratioY: 3),
       sourcePath: image!.path,
       compressFormat: ImageCompressFormat.jpg,
       compressQuality: 100,
@@ -228,6 +241,8 @@ class _MyHomePageState extends State<MyHomePage> {
           aspectRatioLockEnabled: true,
           aspectRatioPickerButtonHidden: true,
           resetButtonHidden: true,
+          rectWidth: 640,
+          rectHeight: 480,
         ),
       ],
     );
